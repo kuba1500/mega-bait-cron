@@ -1,10 +1,10 @@
+
 name: Daily Birthday Check
 
 on:
   schedule:
-    # Runs every day at 8:00 AM Israel time (6:00 AM UTC)
-    - cron: '0 6 * * *'
-  workflow_dispatch: # Allows manual trigger for testing
+    - cron: '0 6 * * *'  # Runs every day at 6:00 AM UTC (8:00 AM Israel time in winter, 9:00 AM in summer)
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
   check-birthdays:
@@ -13,4 +13,6 @@ jobs:
     steps:
       - name: Call Birthday Check Function
         run: |
-          curl -X POST "https://megabaitprivate.base44.app/api/apps/68a20f7a1cd7c118dc55744d/functions/triggerBirthdayCheck?token=${{ secrets.CRON_SECRET }}"
+          curl -X POST "https://megabaitprivate.base44.app/api/apps/68a20f7a1cd7c118dc55744d/functions/triggerBirthdayCheck?token=${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -v
