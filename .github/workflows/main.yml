@@ -2,19 +2,20 @@ name: Daily Birthday Check
 
 on:
   schedule:
-    # Runs every day at 8:00 AM Israel time (6:00 AM UTC)
+    # רץ כל יום ב-8:00 בבוקר שעון ישראל (6:00 UTC)
     - cron: '0 6 * * *'
-  workflow_dispatch: # Allows manual trigger for testing
+  workflow_dispatch: # מאפשר הפעלה ידנית
 
 jobs:
   check-birthdays:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Call Birthday Check Function
+      - name: Call Birthday Check Function (with header)
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
           echo "Token length: ${#CRON_SECRET}"
           echo "First 4 chars: ${CRON_SECRET:0:4}"
-          curl -X POST "https://megabaitprivate.base44.app/api/apps/68a20f7a1cd7c118dc55744d/functions/triggerBirthdayCheck?token=${CRON_SECRET}"
+          curl -X POST "https://megabaitprivate.base44.app/api/apps/68a20f7a1cd7c118dc55744d/functions/triggerBirthdayCheck" \
+            -H "x-cron-secret: ${CRON_SECRET}"
