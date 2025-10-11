@@ -2,8 +2,8 @@ name: Daily Birthday Check
 
 on:
   schedule:
-    # רץ כל יום ב-11:00 שעון ישראל (9:00 UTC)
-       - cron: '45 17 * * *'
+    # רץ אוטומטית ב-00:37 שעון ישראל (21:37 UTC)
+    - cron: '38 21 * * *'
   workflow_dispatch: # מאפשר הפעלה ידנית
 
 jobs:
