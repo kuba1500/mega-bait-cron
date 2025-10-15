@@ -1,0 +1,22 @@
+name: Daily Birthday Check - Development Version
+
+on:
+  schedule:
+    # רץ אוטומטית ב-12:00 שעון ישראל בקיץ (10:00 UTC)
+    - cron: '0 10 * * *' 
+  workflow_dispatch: # מאפשר הפעלה ידנית
+
+jobs:
+  check-birthdays-dev:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Call Birthday Check Function for Development App
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }} # משתמש באותו Secret שהגדרת
+        run: |
+          echo "Token length: ${#CRON_SECRET}"
+          echo "First 4 chars: ${CRON_SECRET:0:4}"
+          # שימו לב: ה-URL מכוון עכשיו לאפליקציית השיכפול עם ה-App ID החדש שלה!
+          curl -X POST "https://v10-copy-858715f2.base44.app/api/apps/68eebb4d4dc35dcd858715f2/functions/triggerBirthdayCheck" \
+            -H "x-cron-secret: ${CRON_SECRET}"
